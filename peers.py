@@ -19,9 +19,9 @@ from charms.reactive import (
 from charmhelpers.core.hookenv import log
 
 
-class KubeMastersPeer(Endpoint):
+class KubeControlPlanePeer(Endpoint):
     """
-    Implements peering for kubernetes-master units.
+    Implements peering for kubernetes-control-plane units.
     """
     def manage_flags(self):
         """
