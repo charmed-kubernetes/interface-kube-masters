@@ -1,6 +1,6 @@
 # kube-masters interface
 
-This interface provides communication amongst kubernetes-masters in a cluster.
+This interface provides communication amongst kubernetes-control-planes in a cluster.
 
 ## States
 
@@ -28,15 +28,15 @@ This interface provides communication amongst kubernetes-masters in a cluster.
 
 @when('kube-masters.connected')
 def agree_on_cohorts():
-    kube_masters = endpoint_from_flag('kube-masters.connected')
+    kube_control_planes = endpoint_from_flag('kube-masters.connected')
     cohort_keys = create_cohorts_for_my_snaps()
-    kube_masters.set_cohort_keys(cohort_keys)
+    kube_control_planes.set_cohort_keys(cohort_keys)
 
 @when('kube-masters.cohorts.ready',
       'kube-control.connected')
 def send_cohorts_to_workers():
-    kube_masters = endpoint_from_flag('kube-masters.cohorts.ready')
-    cohort_keys = kube_masters.cohort_keys
+    kube_control_planes = endpoint_from_flag('kube-masters.cohorts.ready')
+    cohort_keys = kube_control_planes.cohort_keys
 
     kube_control = endpoint_from_flag('kube-control.connected')
     # The following set method is defined in interface-kube-control
